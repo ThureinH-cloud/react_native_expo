@@ -20,7 +20,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.thureinhtet.fashion_ui"
     },
     "web": {
       "bundler": "metro",
@@ -41,6 +42,7 @@
       "eas": {
         "projectId": "5afafdac-ec86-419b-a503-51af6301012b"
       }
-    }
+    },
+    "owner": "thureinhtet"
   }
 }

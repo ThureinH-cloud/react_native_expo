@@ -1,21 +1,30 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image'
-import React,{useState} from 'react'
-import { SafeAreaView,Text,View,StyleSheet,Switch, Pressable,ScrollView } from 'react-native'
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import React,{useRef, useState} from 'react'
+import { SafeAreaView,Text,View,StyleSheet,Switch, Pressable,ScrollView, Dimensions } from 'react-native'
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useSession } from '@/providers/ctx';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+const {width,height}=Dimensions.get("window");
 
 export default function profile() {
   const {signOut}=useSession();
   const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
   const [isEnabled, setIsEnabled] = useState(false);
+  const first=useRef<ScrollView>(null);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
+  const onPresstoTop=()=>{
+    first.current?.scrollTo(
+      {
+        y:0,
+        animated:true
+      }
+    )
+  }
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
         <View style={styles.profile_container}>
           <Image 
             style={styles.image}
@@ -27,7 +36,7 @@ export default function profile() {
           <Text style={{position:'relative',top:-53,fontSize:19,fontWeight:"700",color:"#fff"}}>TH</Text>
           <Text style={styles.name}>Thurein Htet</Text>
         </View>
-        <ScrollView>
+        <ScrollView ref={first} showsVerticalScrollIndicator={false}>
         <View style={styles.list_item}>
           <View style={{flexDirection:'row',flexBasis:'auto'}}>
             <Ionicons style={{marginRight:10}} name='clipboard-outline' size={20}  />
@@ -55,8 +64,8 @@ export default function profile() {
             </View>
           </View>
             <Switch
-              trackColor={{false: '#cacabcbc', true: '#81b0ff'}}
-              thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+              trackColor={{false: '#cacabcbc', true: 'grey'}}
+              thumbColor={isEnabled ? '#fffe' : '#f4f3f4'}
               ios_backgroundColor="rgba(206, 204, 204, 0.913)"
               onValueChange={toggleSwitch}
               value={isEnabled}
@@ -95,9 +104,9 @@ export default function profile() {
           </View>
        </View>
        <View>
-        <Pressable onPress={signOut}>
+        <TouchableOpacity onPress={signOut}>
           <Text style={[styles.link_button,{marginRight:3}]}>Log  out</Text>
-        </Pressable>
+        </TouchableOpacity>
         <View style={{flexDirection:'row'}}>
           <Pressable>
             <Text style={styles.link_button}>Privacy Policy</Text>
@@ -108,9 +117,11 @@ export default function profile() {
           </Pressable>
         </View>
         <Text style={styles.link_button}>1.0.0</Text>
-
        </View>
+       
         </ScrollView>
+        <View style={{height:110}}>
+       </View>
     </SafeAreaView>
   )
 }
@@ -144,5 +155,8 @@ const styles = StyleSheet.create({
     fontWeight:"600",
     margin:8,
     color:"darkgreen"
+  },
+  container: {
+    minHeight:height
   }
 })
