@@ -1,13 +1,17 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-
+import { useAppDispatch } from '@/hooks/useRedux';
+import { fetchRequiredInfo } from '@/providers/redux/requiredInfoSlice';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchRequiredInfo())
+  },[]);
   return (
     <Tabs
       screenOptions={{
@@ -33,11 +37,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="notification"
+        name="cart"
         options={{
-          title: 'Notification',
+          title: 'Cart',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'notifications' : 'notifications-outline'} color={color} />
+            <TabBarIcon name={focused ? 'cart' : 'cart-outline'} color={color} />
           ),
         }}
       />
