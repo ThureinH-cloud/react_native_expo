@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   list_item: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems:"baseline",
+    alignItems:"flex-start",
     padding: 10,
     marginTop:10,
   },
